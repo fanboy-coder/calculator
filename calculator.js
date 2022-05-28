@@ -44,7 +44,7 @@ const buttons = document.querySelectorAll("button");
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         //having 0 as the default num1 when the user first presses an operator
-        if (number1.length === 0 && button.classList.contains("operator")) {
+        if (number1.length === 0 && storedTotal === 0 && button.classList.contains("operator")) {
             number1.push(0);
             display[0].push(number1);
             display[1].pop();
@@ -54,6 +54,7 @@ buttons.forEach(button => {
         //clearing
         if (button.classList.contains("clear")) {
             clear();
+            storedTotal.pop();
             document.getElementById("textbox").textContent = display.join("");
         }
         //adding num1
@@ -79,6 +80,17 @@ buttons.forEach(button => {
                 num1 = number1.join("");
                 display[0].pop();
                 display[0].push(num1);
+                display[1].push(button.innerHTML);
+                document.getElementById("textbox").textContent = display.join("");
+            }
+            if (number1.length === 0 && storedTotal.length === 1) {
+                number1.push(storedTotal);
+                operator.pop();
+                operator.push(button.id);
+                num1 = number1.join("");
+                display[0].pop();
+                display[0].push(num1);
+                display[1].pop();
                 display[1].push(button.innerHTML);
                 document.getElementById("textbox").textContent = display.join("");
             }
